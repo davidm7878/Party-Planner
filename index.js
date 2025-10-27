@@ -1,6 +1,6 @@
 const BASE = "https://fsa-crud-2aa9294fe819.herokuapp.com/api";
 const COHORT = "/2509-PT-David";
-const RESOURCE = "/events";
+const RESOURCE = "/events/";
 const API = BASE + COHORT + RESOURCE;
 
 let parties = [];
@@ -22,7 +22,7 @@ async function getParties() {
 
 async function getParty(id) {
   try {
-    const response = await fetch(API + "/events" + id);
+    const response = await fetch(API + id);
     const result = await response.json();
     selectedParty = result.data;
     render();
@@ -74,7 +74,7 @@ function PartyDetails() {
   }
 
   const $party = document.createElement("section");
-  $artist.classList.add("party");
+  $party.classList.add("party");
   $party.innerHTML = `
   <h3>${selectedParty.name} #${selectedParty.id}</h3>
   <figure>
