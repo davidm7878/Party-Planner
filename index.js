@@ -5,6 +5,8 @@ const API = BASE + COHORT + RESOURCE;
 
 let parties = [];
 let selectedParty;
+let rsvps = [];
+let guests = [];
 
 async function getParties() {
   try {
@@ -20,17 +22,31 @@ async function getParties() {
 
 async function getParty(id) {
   try {
-    const response = await fetch(API + "/" + id);
+    const response = await fetch(API + "/events" + id);
     const result = await response.json();
-    selectedArtist = result.data;
+    selectedParty = result.data;
     render();
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getRsvps() {
+  try {
+    const response = await fetch(API + "/rsvps");
+    const result = await response.json();
+    rsvps = result.data;
+    render();
+  } catch (error) {
+    console.error(error);
   }
 }
 
 function PartyListItem(party) {
   const $party = document.createElement("li");
+  if (party.id === selectedParty?.id) {
+    $party.classList.add("selected");
+  }
   $party.innerHTML = `
   <a href="#selected">${party.name}</a>
   `;
